@@ -7,26 +7,67 @@
 <style>
   body { font-family: -apple-system, "PingFang TC", sans-serif; max-width: 720px; margin: 0 auto; padding: 32px 20px; line-height: 1.8; color: #333; }
   h1 { font-size: 1.6em; } h2 { font-size: 1.2em; margin-top: 2em; color: #2e8c78; }
+  p strong { color: #1a4a3f; }
+  .highlight { background: #f0f7f5; border-left: 4px solid #2e8c78; padding: 12px 16px; border-radius: 0 8px 8px 0; }
+  @media (prefers-color-scheme: dark) {
+    body { background: #1c1c1e; color: #e5e5ea; }
+    p strong { color: #7fd4c0; }
+    .highlight { background: #24322e; }
+  }
 </style>
 </head>
 <body>
 <h1>存！ Read Later — 支援</h1>
 
-<h2>常見問題 FAQ</h2>
+<h2>開始使用</h2>
 <p><strong>Q:怎麼存文章?</strong><br>
-在 Threads、IG、Safari 等任何 App 看到想留的內容,按「分享」→ 選「存！」。用幾次之後,你的分類會像聯絡人一樣出現在分享面板上排,點一下就直接存入該分類。</p>
+在 Threads、IG、Safari 等任何 App 看到想留的內容,按「分享」→ 選「存！」。它會自動抓標題、摘要和圖片,並依內容自動分類。</p>
 
-<p><strong>Q:存的文章在哪裡刪除?</strong><br>
-列表左滑,或點進文章 → 右上角「⋯」→ 刪除。</p>
+<p><strong>Q:為什麼我的分享面板上排沒有出現分類頭像?</strong><br>
+分類頭像(像聯絡人一樣出現在分享面板最上排)是 iOS 系統依你的使用習慣決定的——新安裝的 App 需要先用「下排 App 列」的方式存個幾次,系統學到習慣後,分類就會開始浮現在上排。所有 App(包括 LINE)都遵循這個機制,不是故障。</p>
 
 <p><strong>Q:Widget 怎麼加?</strong><br>
-長按桌面 → 編輯 → 加入小工具 → 找「存！」。Widget 會輪播你還沒看的文章。</p>
+長按桌面空白處 → 左上角「＋」(或「編輯」) → 搜尋「存！」→ 加入。Widget 會每隔幾小時輪播一篇你還沒看的文章,點了直接開啟那篇。鎖定畫面也有小型 Widget 可加。</p>
 
-<p><strong>Q:資料會上傳到雲端嗎?</strong><br>
-不會。所有資料只存在你的裝置上。</p>
+<p><strong>Q:存的文章怎麼刪除?</strong><br>
+列表向左滑,或點進文章 → 右上角「⋯」→ 刪除。刪除只會發生在你手動操作時,App 永遠不會自己刪你的資料。</p>
+
+<h2>資料與隱私</h2>
+<div class="highlight">
+<p><strong>Q:換新手機,資料會不會不見?</strong><br>
+只要用 iPhone 的標準轉移方式(開新機時選「從舊 iPhone 轉移」或「從 iCloud 備份還原」),存！的所有資料都會完整搬過去——它包含在 iPhone 的系統備份範圍內。<br>
+⚠️ 但如果把新手機設成「全新設定」不還原備份,資料不會跟過去。換機前建議先做一次匯出備份(見下題)。</p>
+</div>
+
+<p><strong>Q:刪掉 App 再重新下載,資料還在嗎?</strong><br>
+不在。存！的資料 100% 存在你的手機裡,我們沒有伺服器、沒有任何副本——所以刪除 App 時,資料也會跟著被 iOS 一併清除。這是「零帳號、零上傳」隱私設計的另一面。若要清出手機空間,請用「卸載 App」(保留資料)而不是「刪除 App」。</p>
+
+<p><strong>Q:怎麼備份我的資料?</strong><br>
+主畫面左上角統計頁裡有「匯出」功能(v1.1 起),可以把全部收藏匯出成 JSON(完整備份)或 CSV(表格)。免費版就能用,永遠不上鎖——你的收藏永遠可以完整帶走。</p>
+
+<p><strong>Q:你們收集我的什麼資料?</strong><br>
+什麼都不收集。沒有帳號、沒有分析工具、沒有廣告 SDK,你存的內容不會離開你的裝置。我們的 App Store 隱私標籤是「不收集資料」——你可以自己去商店頁查證。</p>
+
+<p><strong>Q:為什麼不用註冊帳號?</strong><br>
+因為用不到。你的資料在你手機裡,不需要一組帳號密碼去「登入」自己的東西。少一個帳號,就少一份個資外洩的風險。</p>
+
+<p><strong>Q:會不會像 Pocket 一樣,哪天服務關閉,收藏全沒了?</strong><br>
+不會,而且這正是存！和它們最大的不同:Pocket 的收藏存在他們的伺服器上,公司收掉、資料就沒了;存！沒有伺服器,資料在你手機裡——就算我們哪天不更新了,App 依然照常運作,你的收藏一篇都不會少。</p>
+
+<h2>存下來的內容</h2>
+<p><strong>Q:原貼文被刪掉或轉私人了,我存的還看得到嗎?</strong><br>
+看得到重點。存入的當下,存！會立刻快照標題、摘要和縮圖保存在本機,原文之後被刪、轉私人,這些快照都還在。但點「開啟原文」連回原網頁時,若原文已刪除就無法載入了。</p>
+
+<p><strong>Q:私人帳號或不公開的貼文存得到嗎?</strong><br>
+私人內容抓不到公開預覽資訊,這種情況存！會自動保存你分享時附帶的文字,不會存成空白。</p>
+
+<h2>費用</h2>
+<p><strong>Q:免費版有什麼限制?以後會不會突然要收費?</strong><br>
+存檔數量永久免費、無上限——這是鐵律,永遠不變。未來會推出的進階功能(如更多自訂選項)採「一次買斷」制,不做訂閱、不放廣告;已經免費的功能不會事後上鎖。</p>
 
 <h2>聯絡我們 Contact</h2>
 <p>問題或建議,歡迎來信:<a href="mailto:toyshop885@gmail.com">toyshop885@gmail.com</a><br>
+一人開發,回信可能稍慢,但每一封都會看。<br>
 For support in English, email us at the address above.</p>
 </body>
 </html>
