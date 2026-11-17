@@ -1,0 +1,80 @@
+<!DOCTYPE html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>存！分享的分類</title>
+<meta name="robots" content="noindex">
+<meta property="og:title" content="朋友分享了一個存！分類"><meta property="og:description" content="點開看清單，一鍵加到你的存！"><meta property="og:image" content="https://isaacmolt.github.io/stash/icon.png">
+<link rel="icon" type="image/png" href="../icon.png">
+<style>
+:root{--bg:#F3F7F5;--card:#fff;--text:#16302A;--muted:#4F6F65;--accent:#1F8F78;--accent2:#16302A;--border:#DCE8E2}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,"PingFang TC","Noto Sans TC",sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:560px;margin:0 auto;padding:36px 16px 60px}
+.top{text-align:center}
+.top img{width:72px;height:72px;border-radius:17px;box-shadow:0 8px 24px rgba(0,0,0,.14)}
+h1{font-size:26px;font-weight:800;margin-top:16px;line-height:1.3;overflow-wrap:anywhere}
+.count{color:var(--muted);font-size:15px;margin-top:4px}
+.cta{display:block;background:var(--accent);color:#fff;font-weight:800;font-size:17px;padding:14px 26px;border-radius:999px;text-decoration:none;margin:22px auto 0;max-width:320px;box-shadow:0 10px 24px rgba(0,0,0,.14)}
+.cta:active{background:var(--accent2)}
+.get{display:inline-block;margin-top:14px;color:var(--accent);font-weight:700;font-size:15px;text-decoration:none}
+ol{list-style:none;margin-top:28px}
+li{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px 14px;margin-bottom:8px}
+li a{color:var(--text);text-decoration:none;font-weight:700;font-size:15px;display:block;overflow-wrap:anywhere}
+li span{display:block;color:var(--muted);font-size:12px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+[hidden]{display:none!important}
+</style></head><body><div class="wrap">
+<div class="top">
+<img src="../icon.png" alt="存！" width="72" height="72">
+<h1 id="name"></h1>
+<div class="count" id="count"></div>
+<a class="cta" id="add" hidden></a>
+<div><a class="get" id="get" href="https://apps.apple.com/app/id6799788163"></a></div>
+</div>
+<ol id="list"></ol>
+</div>
+<script>
+(function () {
+  var en = !/^zh/i.test(navigator.language || 'zh');
+  var T = en
+    ? { add: 'Add to Read Later', get: 'Don’t have the app? Get it on the App Store', n: function (n) { return n + ' items'; }, bad: 'This link is incomplete', home: 'About the app' }
+    : { add: '加到存！', get: '還沒有存！？到 App Store 下載', n: function (n) { return '共 ' + n + ' 篇'; }, bad: '這個連結不完整', home: '看看存！是什麼' };
+  var $ = function (id) { return document.getElementById(id); };
+  var payload = location.hash.replace(/^#/, '');
+  $('get').textContent = T.get;
+  if (!/^[0-9][A-Za-z0-9_-]+$/.test(payload)) {
+    $('name').textContent = T.bad;
+    $('get').textContent = T.home; $('get').href = '../';
+    return;
+  }
+  var add = $('add');
+  add.textContent = T.add;
+  add.href = 'stash://import?d=' + payload;
+  add.hidden = false;
+  $('name').textContent = en ? 'A shared folder' : '朋友分享的分類';
+  if (payload[0] !== '1' || !('DecompressionStream' in window)) return;
+  try {
+    var b64 = payload.slice(1).replace(/-/g, '+').replace(/_/g, '/');
+    while (b64.length % 4) b64 += '=';
+    var bin = atob(b64), bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    var stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+    new Response(stream).text().then(function (text) {
+      var d = JSON.parse(text);
+      var items = (d.i || []).filter(function (r) { return /^https?:\/\//i.test(r[0] || ''); });
+      var label = (d.e && d.e !== d.n ? d.e + ' ' : '') + (d.n || '');
+      $('name').textContent = '「' + label + '」';
+      document.title = label + '｜存！';
+      $('count').textContent = T.n(items.length);
+      var list = $('list');
+      items.forEach(function (r) {
+        var li = document.createElement('li'), a = document.createElement('a'), s = document.createElement('span');
+        var host = '';
+        try { host = new URL(r[0]).hostname.replace(/^www\./, ''); } catch (e) {}
+        a.href = r[0]; a.rel = 'noopener noreferrer'; a.target = '_blank';
+        a.textContent = r[1] || host || r[0];
+        s.textContent = r[1] ? host : r[0];
+        li.appendChild(a); li.appendChild(s); list.appendChild(li);
+      });
+    }).catch(function () {});
+  } catch (e) {}
+})();
+</script>
+</body></html>
